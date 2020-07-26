@@ -5,6 +5,7 @@ import telegram.ext
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from bs4 import BeautifulSoup
 
+TOKEN = os.environ["TOKEN"]
 PORT = int(os.environ.get('PORT', 5000))
 
 # Enable logging
@@ -67,7 +68,7 @@ def error(update, context):
 
 def main():
     # Initialize
-    updater = Updater("1085735016:AAHpHql2PN8h-I8tECvlbKT-rdXGFX-1OHE", use_context=True)
+    updater = Updater("TOKEN", use_context=True)
     dp = updater.dispatcher
     job_queue = updater.job_queue
 
@@ -93,9 +94,9 @@ def main():
 
     # Start the bot
     # updater.start_polling()
-    updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path="1085735016:AAHpHql2PN8h-I8tECvlbKT-rdXGFX-1OHE")
+    updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path="TOKEN")
     updater.bot.setWebhook('https://faplru-bot.herokuapp.com/' +
-                           '1085735016:AAHpHql2PN8h-I8tECvlbKT-rdXGFX-1OHE')
+                           'TOKEN')
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
