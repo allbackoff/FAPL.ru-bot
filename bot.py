@@ -68,7 +68,7 @@ def error(update, context):
 
 def main():
     # Initialize
-    updater = Updater("TOKEN", use_context=True)
+    updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
     job_queue = updater.job_queue
 
@@ -94,9 +94,9 @@ def main():
 
     # Start the bot
     # updater.start_polling()
-    updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path="TOKEN")
+    updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
     updater.bot.setWebhook('https://faplru-bot.herokuapp.com/' +
-                           'TOKEN')
+                           TOKEN)
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
