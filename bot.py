@@ -62,7 +62,7 @@ def main():
     # Set the id of latest article to keep track of
     global max_id
     max_id = 0
-    for link in list_articles():
+    for link in [l for l, n in list_articles()]:
         article_id = int(link[21:-1])
         if article_id > max_id:
             max_id = article_id
