@@ -35,7 +35,7 @@ def list_articles():
 # Checks whether there is new article and sends to channel if true
 def check_for_updates(context):
     global max_id
-    new_link = "http://fapl.ru/posts/" + str(max_id) + "/"
+    new_link = "http://fapl.ru/posts/" + str(max_id + 1) + "/"
     articles_info = list_articles()
     articles = [link for link, name in articles_info]
     if new_link in articles:
@@ -43,6 +43,10 @@ def check_for_updates(context):
         name = articles_info[index][1]
         context.bot.send_message(chat_id=CHANNEL_NAME, text="[%s](%s)" % (name, new_link), parse_mode="MarkdownV2")
         max_id += 1
+
+    context.bot.send_message(chat_id=CHANNEL_NAME, text="[%s](%s)" % ("'Ливерпуль' продал Ловрена в 'Зенит'",
+                                                                      "http://fapl.ru/posts/79924/"),
+                             parse_mode="MarkdownV2")
 
 
 def error(update, context):
