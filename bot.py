@@ -86,8 +86,8 @@ def main():
 
 
     # Command Handlers
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("last_article", send_article))
+    # dp.add_handler(CommandHandler("start", start))
+    # dp.add_handler(CommandHandler("last_article", send_article))
 
     # Error handler
     dp.add_error_handler(error)
