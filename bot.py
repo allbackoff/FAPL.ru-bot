@@ -26,6 +26,7 @@ def list_articles():
     article_links.insert(0, url + page_content.find('div', {'class': 'block'}).find('a').get('href'))
     return article_links
 
+
 # Checks whether there is new article and sends to channel if true
 def check_for_updates(context):
     global max_id
@@ -34,37 +35,18 @@ def check_for_updates(context):
         context.bot.send_message(chat_id=CHANNEL_NAME, text=new_link)
         max_id += 1
 
-    # last_id = job.context
-    # new_id = max_id + 1
-    # new_link = "http://fapl.ru/" + str(new_id) + "/"
-    # new_response = requests.get(new_link)
-    # new_content = BeautifulSoup(new_response.content, 'html.parser')
-    # if new_content.find('body').text.strip() != "Такой новости не существует!":
-    #     context.bot.send_message(chat_id=240817442, text=new_link)
-    #     max_id += 1
-
-    # last_article = job.context
-    # last_article_id = int(last_article[21:-1])
-    # recent_article = list_articles()[1]
-    # if last_article != recent_article:
-    #     context.bot.send_message(chat_id=240817442, text=recent_article)
-
-
-def send_article(update, context):
-    articles = list_articles()
-    update.message.reply_text(articles[1])
-
 
 def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 
 def main():
-    # Initialize
+    # Initialize bot
     updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
     job_queue = updater.job_queue
 
+    # Set the id of latest article to keep track of
     global max_id
     max_id = 0
     for link in list_articles():
@@ -72,21 +54,13 @@ def main():
         if article_id > max_id:
             max_id = article_id
 
-    # last_article = "http://fapl.ru/posts/" + str(max_id) + "/"
-
+    # Job queue for every minute
     job_queue.run_repeating(check_for_updates, 60, 5)
-
-
-
-    # Command Handlers
-    # dp.add_handler(CommandHandler("start", start))
-    # dp.add_handler(CommandHandler("last_article", send_article))
 
     # Error handler
     dp.add_error_handler(error)
 
     # Start the bot
-    # updater.start_polling()
     updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
     updater.bot.setWebhook('https://faplru-bot.herokuapp.com/' +
                            TOKEN)
@@ -97,5 +71,5 @@ def main():
     updater.idle()
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
