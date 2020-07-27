@@ -34,7 +34,7 @@ def check_for_updates(context):
     if new_link in list_articles():
         context.bot.send_message(chat_id=CHANNEL_NAME, text=new_link)
         max_id += 1
-    context.bot.send_message(chat_id=CHANNEL_NAME, text="[inline URL](http://www.example.com/)")
+    context.bot.send_message(chat_id=CHANNEL_NAME, text="[inline URL](http://www.example.com/)", parse_mode="MarkdownV2")
 
 
 def error(update, context):
