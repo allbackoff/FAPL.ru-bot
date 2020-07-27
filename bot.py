@@ -44,10 +44,6 @@ def check_for_updates(context):
         context.bot.send_message(chat_id=CHANNEL_NAME, text="[%s](%s)" % (name, new_link), parse_mode="MarkdownV2")
         max_id += 1
 
-    context.bot.send_message(chat_id=CHANNEL_NAME, text="[%s](%s)" % ("'Ливерпуль' продал Ловрена в 'Зенит'",
-                                                                      "http://fapl.ru/posts/79924/"),
-                             parse_mode="MarkdownV2")
-
 
 def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
