@@ -1,0 +1,2 @@
+# FAPL.ru-bot
+Telegram bot which gets news articles from FAPL.ru and sends them immediately to the channel
