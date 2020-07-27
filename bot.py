@@ -14,14 +14,6 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
-def start(update, context):
-    update.message.reply_text('Я буду отправлять тебе посты с сайта FAPL.ru')
-
-
-def help(update, context):
-    update.message.reply_text('Help is not correctly set yet')
-
-
 # Accessing articles from fapl.ru
 def list_articles():
     url = "http://fapl.ru"
