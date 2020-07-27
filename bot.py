@@ -1,11 +1,12 @@
-import requests
 import logging
 import os
-import telegram.ext
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+
+import requests
 from bs4 import BeautifulSoup
+from telegram.ext import Updater
 
 TOKEN = os.environ["TOKEN"]
+CHANNEL_NAME = os.environ["CHANNEL_NAME"]
 PORT = int(os.environ.get('PORT', 5000))
 
 # Enable logging
@@ -25,12 +26,12 @@ def list_articles():
     article_links.insert(0, url + page_content.find('div', {'class': 'block'}).find('a').get('href'))
     return article_links
 
-
+# Checks whether there is new article and sends to channel if true
 def check_for_updates(context):
     global max_id
     new_link = "http://fapl.ru/posts/" + str(max_id + 1) + "/"
     if new_link in list_articles():
-        context.bot.send_message(chat_id="@faplrubot", text=new_link)
+        context.bot.send_message(chat_id=CHANNEL_NAME, text=new_link)
         max_id += 1
 
     # last_id = job.context
