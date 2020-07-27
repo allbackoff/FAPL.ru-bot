@@ -20,21 +20,29 @@ def list_articles():
     url = "http://fapl.ru"
     page_response = requests.get(url, timeout=5)
     page_content = BeautifulSoup(page_response.content, "html.parser")
-    article_links = []
+    articles_info = []
     for item in page_content.find_all('div', {'class': 'block news'}):
-        article_links.append(url + item.find('a').get('href'))
-    article_links.insert(0, url + page_content.find('div', {'class': 'block'}).find('a').get('href'))
-    return article_links
+        article_link = url + item.find('a').get('href')
+        article_name = item.find('a').text
+        articles_info.append((article_link, article_name))
+    # Add the main article ("Новость дня") to the list
+    main_article_link = url + page_content.find('div', {'class': 'block'}).find('a').get('href')
+    main_article_name = page_content.find('div', {'class': 'block'}).find('a').text
+    articles_info.insert(0, (main_article_link, main_article_name))
+    return articles_info
 
 
 # Checks whether there is new article and sends to channel if true
 def check_for_updates(context):
     global max_id
     new_link = "http://fapl.ru/posts/" + str(max_id + 1) + "/"
-    if new_link in list_articles():
-        context.bot.send_message(chat_id=CHANNEL_NAME, text=new_link)
+    articles_info = list_articles()
+    articles = [link for link, name in articles_info]
+    if new_link in articles:
+        index = [i for i, a in enumerate(articles_info) if a[0]==new_link].pop()
+        name = articles_info[index][1]
+        context.bot.send_message(chat_id=CHANNEL_NAME, text="[%s](%s)"%(name, new_link), parse_mode="MarkdownV2")
         max_id += 1
-    # context.bot.send_message(chat_id=CHANNEL_NAME, text="[inline URL](http://www.example.com/)", parse_mode="MarkdownV2")
 
 
 def error(update, context):
