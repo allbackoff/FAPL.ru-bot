@@ -15,7 +15,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
-# Accessing articles from fapl.ru
+# Accessing articles from FAPL.ru
 def list_articles():
     url = "http://fapl.ru"
     page_response = requests.get(url, timeout=5)
@@ -34,6 +34,7 @@ def check_for_updates(context):
     if new_link in list_articles():
         context.bot.send_message(chat_id=CHANNEL_NAME, text=new_link)
         max_id += 1
+    context.bot.send_message(chat_id=CHANNEL_NAME, text="[inline URL](http://www.example.com/)")
 
 
 def error(update, context):
