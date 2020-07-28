@@ -4,6 +4,7 @@ import os
 import requests
 from bs4 import BeautifulSoup
 from telegram.ext import Updater
+from telegram.utils.helpers import escape_markdown
 
 TOKEN = os.environ["TOKEN"]
 CHANNEL_NAME = os.environ["CHANNEL_NAME"]
@@ -41,7 +42,9 @@ def check_for_updates(context):
     if new_link in articles:
         index = [i for i, a in enumerate(articles_info) if a[0] == new_link].pop()
         name = articles_info[index][1]
-        context.bot.send_message(chat_id=CHANNEL_NAME, text="[%s](%s)" % (name, new_link), parse_mode="MarkdownV2")
+        context.bot.send_message(chat_id=CHANNEL_NAME,
+                                 text="[%s](%s)" % (escape_markdown(name, version=2), new_link),
+                                 parse_mode="MarkdownV2")
         max_id += 1
 
 
