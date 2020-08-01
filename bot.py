@@ -48,8 +48,6 @@ def check_for_updates(context):
                                      parse_mode="MarkdownV2")
             max_id += 1
 
-        # Trying the logger
-        logger.info('Testing the logger')
     except:
         logger.exception('%s' % Exception.__class__)
 
