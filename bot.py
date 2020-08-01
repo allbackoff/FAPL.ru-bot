@@ -35,17 +35,20 @@ def list_articles():
 
 # Checks whether there is new article and sends to channel if true
 def check_for_updates(context):
-    global max_id
-    new_link = "http://fapl.ru/posts/" + str(max_id + 1) + "/"
-    articles_info = list_articles()
-    articles = [link for link, name in articles_info]
-    if new_link in articles:
-        index = [i for i, a in enumerate(articles_info) if a[0] == new_link].pop()
-        name = articles_info[index][1]
-        context.bot.send_message(chat_id=CHANNEL_NAME,
-                                 text="[%s](%s)" % (escape_markdown(name, version=2), new_link),
-                                 parse_mode="MarkdownV2")
-        max_id += 1
+    try:
+        global max_id
+        new_link = "http://fapl.ru/posts/" + str(max_id + 1) + "/"
+        articles_info = list_articles()
+        articles = [link for link, name in articles_info]
+        if new_link in articles:
+            index = [i for i, a in enumerate(articles_info) if a[0] == new_link].pop()
+            name = articles_info[index][1]
+            context.bot.send_message(chat_id=CHANNEL_NAME,
+                                     text="[%s](%s)" % (escape_markdown(name, version=2), new_link),
+                                     parse_mode="MarkdownV2")
+            max_id += 1
+    except:
+        logger.exception('%s' % Exception.__class__)
 
 
 def error(update, context):
@@ -57,6 +60,9 @@ def main():
     updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
     job_queue = updater.job_queue
+
+    # Trying the logger
+    logger.info('Testing the logger')
 
     # Set the id of latest article to keep track of
     global max_id
