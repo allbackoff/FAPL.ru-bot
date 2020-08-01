@@ -47,6 +47,9 @@ def check_for_updates(context):
                                      text="[%s](%s)" % (escape_markdown(name, version=2), new_link),
                                      parse_mode="MarkdownV2")
             max_id += 1
+
+        # Trying the logger
+        logger.info('Testing the logger')
     except:
         logger.exception('%s' % Exception.__class__)
 
@@ -60,9 +63,6 @@ def main():
     updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
     job_queue = updater.job_queue
-
-    # Trying the logger
-    logger.info('Testing the logger')
 
     # Set the id of latest article to keep track of
     global max_id
