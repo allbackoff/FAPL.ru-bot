@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 # Accessing articles from FAPL.ru
 def list_articles():
     url = "http://fapl.ru"
-    page_response = requests.get(url, timeout=5)
+    page_response = requests.get(url)
     page_content = BeautifulSoup(page_response.content, "html.parser")
     articles_info = []
     for item in page_content.find_all('div', {'class': 'block news'}):
